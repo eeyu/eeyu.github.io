@@ -1,6 +1,10 @@
 'use strict'
+var player;
+
 
 const switcher = document.querySelector('.btn');
+const listText = document.getElementById("textedit");
+// const video = document.getElementById("player");
 
 switcher.addEventListener('click', function() {
     document.body.classList.toggle('dark-theme')
@@ -15,18 +19,49 @@ switcher.addEventListener('click', function() {
     console.log('current class name: ' + className);
 });
 
+var state = 0;
 document.addEventListener('keydown', (event) => {
-    console.log("evernt occrred");
     var name = event.key;
-    var code = event.code;
-    if (name === 'Control') {
-      // Do nothing.
-      return;
+
+    var t = "textContent" in listText.childNodes[0] ? "textContent" : "innerText";
+    listText.childNodes[0][t] += name;
+
+    if (name == 'p') {
+        if (state == 0) {
+            state = 1;
+            player.playVideo();
+        } else {
+            state = 0;
+            player.pauseVideo();
+        }
+        
     }
-    if (event.ctrlKey) {
-        console.log(`Combination of ctrlKey + ${name} \n Key code Value: ${code}`);
-    } else {
-        console.log(`Key pressed ${name} \n Key code Value: ${code}`);
-    }
+    
+
 }, false);
+
+var tag = document.createElement('script');
+tag.id = 'iframe-demo';
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('existing-iframe-example', {
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+  });
+}
+function onPlayerReady(event) {
+  //player.playVideo();
+}
+
+function onPlayerStateChange(event) {
+//   changeBorderColor(event.data);
+}
+
+
+
 

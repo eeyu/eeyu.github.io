@@ -11,19 +11,29 @@
     <h1>Task List</h1>
     <p id="msg">Current tasks:</p>
     <ul>
-        <li class="list">Add visual styles</li>
-        <li class="list">Add light and dark themes</li>
+        <li id = "textedit" class="list">Typed: </li>
+        <li class="list">press  'p' to play</li>
         <li>Enable switching the theme</li>
     </ul>
 
     <div>
         <button class="btn">Dark</button>
     </div>
-    <video controls>
-        <source src="cat.mp4" width="1280px" height="720px"> 
-    </video>
 
-    <script src="app.js"></script>  
+    <!-- <div id="player"></div> -->
+
+    <iframe id="existing-iframe-example"
+        width="560" height="315" 
+        src="https://www.youtube.com/embed/9Iup70E0Ig0?enablejsapi=1" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+
+    <!-- <video controls>
+        <source src="cat.mp4" width="480px" height="480px"> 
+    </video> -->
+    <script src="app.js" type="text/javascript"></script>
     <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
 </html>
