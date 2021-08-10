@@ -14,3 +14,19 @@ switcher.addEventListener('click', function() {
     }
     console.log('current class name: ' + className);
 });
+
+document.addEventListener('keydown', (event) => {
+    console.log("evernt occrred");
+    var name = event.key;
+    var code = event.code;
+    if (name === 'Control') {
+      // Do nothing.
+      return;
+    }
+    if (event.ctrlKey) {
+        console.log(`Combination of ctrlKey + ${name} \n Key code Value: ${code}`);
+    } else {
+        console.log(`Key pressed ${name} \n Key code Value: ${code}`);
+    }
+  }, false);
+
