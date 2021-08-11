@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="main.css">
 </head>  
 <body class="dark-theme">
-    <h1>Task List</h1>
-    <p id="msg">Current tasks:</p>
+    <h1>Welcome to the cat stream</h1>
+    <p id="msg">Stuff</p>
     <ul>
-        <li id = "textedit" class="list">Typed: </li>
+        <li id = "textedit" class="list">Typed keys appear here: </li>
         <li class="list">press  'p' to play</li>
-        <li>Enable switching the theme</li>
+        <li>Press the button to switch themes</li>
     </ul>
 
     <div>
@@ -22,13 +22,26 @@
 
     <!-- <div id="player"></div> -->
 
-    <iframe id="existing-iframe-example"
+    <!-- <iframe id="existing-iframe-example"
         width="560" height="315" 
         src="https://www.youtube.com/embed/9Iup70E0Ig0?enablejsapi=1" 
         title="YouTube video player" frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
+    </iframe> -->
+
+    <iframe id="existing-iframe-example"
+    width="560" height="315" 
+    src="https://www.youtube.com/embed/iITuDanVKA8" 
+    title="YouTube video player" frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
     </iframe>
+
+    <form id="ajaxposter">
+    </form>
+
+    <button onclick="ajaxpost()"> Submit </button>
 
     <!-- <video controls>
         <source src="cat.mp4" width="480px" height="480px"> 

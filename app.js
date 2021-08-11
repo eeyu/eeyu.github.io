@@ -1,7 +1,6 @@
 'use strict'
 var player;
 
-
 const switcher = document.querySelector('.btn');
 const listText = document.getElementById("textedit");
 // const video = document.getElementById("player");
@@ -34,10 +33,7 @@ document.addEventListener('keydown', (event) => {
             state = 0;
             player.pauseVideo();
         }
-        
     }
-    
-
 }, false);
 
 var tag = document.createElement('script');
@@ -60,6 +56,14 @@ function onPlayerReady(event) {
 
 function onPlayerStateChange(event) {
 //   changeBorderColor(event.data);
+}
+
+function ajaxpost(){
+    var ajax = new XMLHttpRequest();
+    var data = document.getElementById("ajaxposter");
+    var formdata = new FormData(data);
+    ajax.open("POST", "/up", true);
+    ajax.send(formdata);
 }
 
 
