@@ -3,6 +3,11 @@ var player;
 
 const switcher = document.querySelector('.btn');
 const listText = document.getElementById("textedit");
+const FBPostFeedback = document.getElementById("FB-post-feedback");
+const FBread = document.getElementById("FB-read");
+
+var retrievedName = '';
+
 // const video = document.getElementById("player");
 
 switcher.addEventListener('click', function() {
@@ -58,12 +63,48 @@ function onPlayerStateChange(event) {
 //   changeBorderColor(event.data);
 }
 
-function ajaxpost(){
-    var ajax = new XMLHttpRequest();
-    var data = document.getElementById("ajaxposter");
-    var formdata = new FormData(data);
-    ajax.open("POST", "/up", true);
-    ajax.send(formdata);
+// function ajaxpost(){
+//     var ajax = new XMLHttpRequest();
+//     var data = document.getElementById("ajaxposter");
+//     var formdata = new FormData(data);
+//     ajax.open("POST", "/up", true);
+//     ajax.send(formdata);
+// }
+
+function firebasepost() {
+    var ID = document.getElementById("ID-field").value;
+    var name = document.getElementById("name-field").value;
+    console.log(ID);
+    console.log(name);
+    sendUserInfo(ID, name);
+
+    FBPostFeedback.textContent = "Sent message: " + ID + ", " + name;
+}
+
+function sendUserInfo(userId, name) {
+    firebase.database().ref('users/' + userId).set({
+      username: name
+    });
+}
+
+function firebaseread() {
+    var ID = document.getElementById("ID-field").value;
+    retrieveUserInfo(ID);
+    console.log(retrievedName);
+    FBread.textContent = "Retrieved Name: " + retrievedName;
+}
+
+function retrieveUserInfo(userID) {
+    var nameRef = firebase.database().ref('users/' + userID);
+    nameRef.on('value', (snapshot) => {
+        var data = snapshot.val();
+        if (!data) {
+            retrievedName = "No User ID Found";
+        } else {
+            retrievedName = data['username'];
+        }
+        
+    });
 }
 
 
