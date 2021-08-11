@@ -72,29 +72,31 @@ function onPlayerStateChange(event) {
 // }
 
 function firebasepost() {
-    var ID = document.getElementById("ID-field").value;
+    // var ID = document.getElementById("ID-field").value;
     var name = document.getElementById("name-field").value;
-    console.log(ID);
-    console.log(name);
+    var ID = 1;
     sendUserInfo(ID, name);
 
     FBPostFeedback.textContent = "Sent message: " + ID + ", " + name;
 }
 
 function sendUserInfo(userId, name) {
+    userId = 1;
     firebase.database().ref('users/' + userId).set({
       username: name
     });
 }
 
 function firebaseread() {
-    var ID = document.getElementById("ID-field").value;
+    // var ID = document.getElementById("ID-field").value;
+    var ID = 1;
     retrieveUserInfo(ID);
     console.log(retrievedName);
     FBread.textContent = "Retrieved Name: " + retrievedName;
 }
 
 function retrieveUserInfo(userID) {
+    userID = 1;
     var nameRef = firebase.database().ref('users/' + userID);
     nameRef.on('value', (snapshot) => {
         var data = snapshot.val();
