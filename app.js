@@ -1,7 +1,6 @@
 'use strict'
 var player;
 
-const switcher = document.querySelector('.btn');
 const listText = document.getElementById("textedit");
 const FBPostFeedback = document.getElementById("FB-post-feedback");
 const FBread = document.getElementById("FB-read");
@@ -23,22 +22,13 @@ switcher.addEventListener('click', function() {
     console.log('current class name: ' + className);
 });
 
-var state = 0;
+// every n seconds, logs the number of keystrokes pressed
+
 document.addEventListener('keydown', (event) => {
     var name = event.key;
 
     var t = "textContent" in listText.childNodes[0] ? "textContent" : "innerText";
-    listText.childNodes[0][t] += name;
-
-    if (name == 'p') {
-        if (state == 0) {
-            state = 1;
-            player.playVideo();
-        } else {
-            state = 0;
-            player.pauseVideo();
-        }
-    }
+    listText.childNodes[0][t] = "Last Key: " + name;
 }, false);
 
 var tag = document.createElement('script');
@@ -62,14 +52,6 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
 //   changeBorderColor(event.data);
 }
-
-// function ajaxpost(){
-//     var ajax = new XMLHttpRequest();
-//     var data = document.getElementById("ajaxposter");
-//     var formdata = new FormData(data);
-//     ajax.open("POST", "/up", true);
-//     ajax.send(formdata);
-// }
 
 function firebasepost() {
     // var ID = document.getElementById("ID-field").value;

@@ -7,37 +7,26 @@
     <title>Baby's first website</title>
     <link rel="stylesheet" href="main.css">
 </head>  
-<body class="dark-theme">
+<body class="light-theme">
+    <!-- Header -->
     <h1>Welcome to the cat stream</h1>
     <p id="msg">Stuff</p>
+
     <ul>
         <li id = "textedit" class="list">Typed keys appear here: </li>
         <li class="list">Type and send a message to see it appear in the livestream</li>
-        <li>Press the button to switch themes</li>
     </ul>
 
-    <div>
-        <button class="btn">Dark</button>
-    </div>
-
-    <!-- <div id="player"></div> -->
-
-    <!-- <iframe id="existing-iframe-example"
-        width="560" height="315" 
-        src="https://www.youtube.com/embed/9Iup70E0Ig0?enablejsapi=1" 
-        title="YouTube video player" frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe> -->
-
+    <!-- Livestream -->
     <iframe id="existing-iframe-example"
     width="560" height="315" 
-    src="https://www.youtube.com/embed/BU7iYH7E6d4" 
+    src="https://www.youtube.com/embed/pmBD4O2TL6U" 
     title="YouTube video player" frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
     allowfullscreen>
     </iframe>
 
+    <!-- Message Board -->
     <form id="posttofirebase">
         <!-- <input type="text" id="ID-field"> -->
         <input type="text" id="name-field">
