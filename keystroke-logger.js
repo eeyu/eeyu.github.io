@@ -10,20 +10,20 @@ class KeystrokeLogger {
 
     incrementUp() {
         this.upKey += 1;
-        this.upKey = ceiling(this.upKey, maxCount);
+        this.upKey = this.ceiling(this.upKey, this.#maxCount);
     }
     incrementDown() {
         this.downKey += 1;
-        this.downKey = ceiling(this.downKey, maxCount);
+        this.downKey = this.ceiling(this.downKey, this.#maxCount);
     }
     incrementLeft() {
         this.leftKey += 1;
-        this.downKey = ceiling(this.downKey, maxCount);
+        this.leftKey = this.ceiling(this.leftKey, this.#maxCount);
         
     }
     incrementRight() {
         this.rightKey += 1;
-        this.downKey = ceiling(this.downKey, maxCount);
+        this.rightKey = this.ceiling(this.rightKey, this.#maxCount);
     }
 
     resetCounts() {
