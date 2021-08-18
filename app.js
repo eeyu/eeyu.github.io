@@ -1,96 +1,86 @@
 'use strict'
-var player;
 
 const listText = document.getElementById("textedit");
 const FBPostFeedback = document.getElementById("FB-post-feedback");
 const FBread = document.getElementById("FB-read");
 
-var retrievedName = '';
+const keystrokeLogger = new KeystrokeLogger();
+var numberKeySelect = 0;
 
-// const video = document.getElementById("player");
-
-switcher.addEventListener('click', function() {
-    document.body.classList.toggle('dark-theme')
-
-    var className = document.body.className;
-    if(className == "dark-theme") {
-        this.textContent = "Dark";
-    }
-    else {
-        this.textContent = "Light";
-    }
-    console.log('current class name: ' + className);
-});
-
-// every n seconds, logs the number of keystrokes pressed
-
+/* 
+    KEYCOUNTS
+*/
 document.addEventListener('keydown', (event) => {
     var name = event.key;
 
-    var t = "textContent" in listText.childNodes[0] ? "textContent" : "innerText";
-    listText.childNodes[0][t] = "Last Key: " + name;
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+        event.preventDefault();
+    }
+
+    if(["Digit1","Digit2","Digit3","Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0"].indexOf(event.code) > -1) {
+        numberKeySelect = parseInt(name);
+    }
+    
+    switch (name) {
+        case "ArrowUp":
+            keystrokeLogger.incrementUp();
+            break;
+        case "ArrowDown":
+            keystrokeLogger.incrementDown();
+            break;
+        case "ArrowLeft":
+            keystrokeLogger.incrementLeft();
+            break;
+        case "ArrowRight":
+            keystrokeLogger.incrementRight();
+            break;
+        default:
+            listText.textContent = "Last Key: " + name;
+            break;
+    }
+    updateKeyCounts(keystrokeLogger);
+    
 }, false);
 
-var tag = document.createElement('script');
-tag.id = 'iframe-demo';
-tag.src = 'https://www.youtube.com/iframe_api';
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('existing-iframe-example', {
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-  });
-}
-function onPlayerReady(event) {
-  //player.playVideo();
+function updateKeyCounts(keyLog) {
+    document.getElementById("upkeys").textContent = "Up Counts: " + keyLog.upKey;
+    document.getElementById("downkeys").textContent = "Down Counts: " + keyLog.downKey;
+    document.getElementById("leftkeys").textContent = "Left Counts: " + keyLog.leftKey;
+    document.getElementById("rightkeys").textContent = "Right Counts: " + keyLog.rightKey;
 }
 
-function onPlayerStateChange(event) {
-//   changeBorderColor(event.data);
+
+/* 
+    DATABASE
+*/
+function recordKeysAndReset() {
+    sendKeysToDatabase(keystrokeLogger);
+    keystrokeLogger.resetCounts();
+    updateKeyCounts(keystrokeLogger);
 }
 
-function firebasepost() {
-    // var ID = document.getElementById("ID-field").value;
-    var name = document.getElementById("name-field").value;
-    var ID = 1;
-    sendUserInfo(ID, name);
-
-    FBPostFeedback.textContent = "Sent message: " + ID + ", " + name;
-}
-
-function sendUserInfo(userId, name) {
-    userId = 1;
-    firebase.database().ref('users/' + userId).set({
-      username: name
+function sendKeysToDatabase(keyLog) {
+    firebase.database().ref('keystrokes/').set({
+        up: keyLog.upKey,
+        down: keyLog.downKey,
+        left: keyLog.leftKey,
+        right: keyLog.rightKey
     });
 }
 
-function firebaseread() {
-    // var ID = document.getElementById("ID-field").value;
-    var ID = 1;
-    retrieveUserInfo(ID);
-    console.log(retrievedName);
-    FBread.textContent = "Retrieved Name: " + retrievedName;
+function recordNumberAndReset() {
+    sendNumberSelectToDatabase(numberKeySelect);
+    numberKeySelect = 0;
 }
 
-function retrieveUserInfo(userID) {
-    userID = 1;
-    var nameRef = firebase.database().ref('users/' + userID);
-    nameRef.on('value', (snapshot) => {
-        var data = snapshot.val();
-        if (!data) {
-            retrievedName = "No User ID Found";
-        } else {
-            retrievedName = data['username'];
-        }
-        
+function sendNumberSelectToDatabase(number) {
+    firebase.database().ref('number/').set({
+        selection: number
     });
 }
 
+var keyLoggerRefreshRate = 100; // in ms
+setInterval(recordKeysAndReset, keyLoggerRefreshRate);
 
-
-
+var buttonRefreshRate = 100; // in ms
+setInterval(recordNumberAndReset, buttonRefreshRate);
